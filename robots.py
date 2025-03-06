@@ -62,12 +62,12 @@ class StickRobot(Robot):
         self.u_theta = np.clip((F_x * np.sin(self.theta) - F_y * np.cos(self.theta)) * self.length - final_heading_k * self.theta, -np.pi/3, np.pi/3)
         super().apf_update(dt, env, goal, rho, k, eta_0, gamma, k_rep, nu)
         
-    def cbf_update(self, dt, env, goal=[0, 0], alpha=1, beta=1, tail_orientation=-1):
-        #### TODO: DOES NOT WORK
+    def cbf_update(self, dt, env, goal=[0, 0], alpha=1, beta=1, tail_orientation=0):
+        #### TODO: DOES NOT WORK, need to implement the cbf including u_theta in the variables.
         x0 = self.x - self.length * np.cos(self.theta)
         y0 = self.y - self.length * np.sin(self.theta)
         F_x, F_y = env.cbf(x0, y0, 0, goal, alpha, beta*tail_orientation)
-        self.u_theta = (F_x * np.sin(self.theta) - F_y * np.cos(self.theta))
+        self.u_theta = (F_x * np.sin(self.theta) - F_y * np.cos(self.theta)) * self.length
         super().cbf_update(dt, env, goal, alpha, beta)
         
         

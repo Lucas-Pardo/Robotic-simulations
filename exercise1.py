@@ -8,9 +8,11 @@ import numpy as np
 
 # Initialize the environment
 environment_type = 2
+robot_type = 2
+obstacle_number = 4
 env_limit = 20
 if environment_type == 1:
-    env = Env1([1 for _ in range(4)], env_limit)  # Set number of obstacles
+    env = Env1([1 for _ in range(obstacle_number)], env_limit)
     # Spawn a robot at random position
     x, y = 0, 0
     while True:
@@ -23,7 +25,6 @@ else:
     env_limit = 5
     x, y = env.generate_start_position(1.1)
 
-robot_type = 2
 robot_length = 1.5
 if robot_type == 1:
     robot = Robot(x, y)
@@ -71,7 +72,6 @@ for _ in range(1500):
 path = np.array(path)
 input_hist = np.array(input_hist)
 
-# Create subplots with a grid specification
 fig = plt.figure(figsize=(14, 8))
 gs = fig.add_gridspec(2, 2, width_ratios=[3, 1])
 
@@ -140,6 +140,7 @@ def update_r2(num, path, stick_robot, robot_circle, input_arrows, path_line, inp
     path_line_theta.set_data(range(num+1), path[:num+1, 2])
     return stick_robot, robot_circle, input_arrows, path_line, input_line_x, input_line_y, path_line_x, path_line_y, input_line_theta, path_line_theta
 
+# Animate the robot movement and graphs
 if robot_type == 1:
     robot_circle = plt.Circle((robot.x, robot.y), robot.diameter/2, color='orange', fill=True)
     ax1.add_patch(robot_circle)

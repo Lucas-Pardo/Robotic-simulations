@@ -6,10 +6,12 @@ import matplotlib.animation as animation
 import numpy as np
 
 # Initialize the environment
-env = Env([1 for _ in range(4)], sigma=5)  # Set number of obstacles and sigma
+robot_type = 2
 env_limit = 10
+obstacle_number = 4
+sigma = 5
+env = Env([1 for _ in range(obstacle_number)], sigma=sigma, env_limit=env_limit)
 # Spawn a robot at random position
-# x, y = 4.5, -4.5
 x, y = 0, 0
 while True:
     x = np.random.uniform(-env_limit//2, env_limit//2)
@@ -17,7 +19,6 @@ while True:
     if not env.is_collision(x, y, 3):
         break
 
-robot_type = 2
 robot_length = 1.5
 if robot_type == 1:
     robot = Robot(x, y)
